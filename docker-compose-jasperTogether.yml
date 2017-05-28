@@ -1,0 +1,32 @@
+jasper:
+  image: tecbi/jasperserver-mysql:latest
+  links:
+    - jasperdb:jasperdb
+  environment:
+    - MYSQL_PORT_3306_TCP_ADDR=db:3306
+    - MYSQL_DATABASE=jasperserver
+    - MYSQL_USER=root
+    - MYSQL_PASSWORD=mysql
+    - MYSQL_ROOT_PASSWORD=mysql
+    - MYSQL_JDBC_URL=jasperdb:3306/jasperserver
+    - DB_TYPE=mysql
+    - DB_HOST=jasperdb
+    - DB_PORT=3306
+    - XMX=8g
+  ports:
+    - "3777:8080"
+  volumes:
+      # Relative path on the host/volume on container
+      - ./jasperserver-import:/jasperserver-import
+
+jasperdb:
+  image: tecbi/mysql8
+  environment:
+    - MYSQL_DATABASE=jasperserver
+    - MYSQL_USER=root
+    - MYSQL_PASSWORD=mysql
+    - MYSQL_ROOT_PASSWORD=mysql
+  ports:
+    - "3306:3306"
+
+
